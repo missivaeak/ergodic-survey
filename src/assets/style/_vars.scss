@@ -1,0 +1,68 @@
+/*
+ * Variables for the app
+ */
+
+@use 'sass:color';
+
+$body-background-fallback: var(--body-background-fallback);
+$body-background: var(--body-background);
+$box-background: var(--box-background);
+$box-background-alt: var(--box-background-alt);
+$box-shadow: 0 15px 25px #00000099;
+$text-colour-body: var(--text-colour-body);
+$text-colour-box: var(--text-colour-box);
+$text-colour-link: var(--text-colour-link);
+$text-colour-link-footer: var(--text-colour-link-footer);
+$btn-background: var(--btn-background);
+$btn-hover: var(--btn-hover);
+$header-background: var(--header-background);
+$footer-background: var(--footer-background);
+
+$line-height: 1.4;
+$base-font-size: 1.25rem;
+$h1-font-size: 3rem;
+$h2-font-size: 2rem;
+$h3-font-size: 1.5rem;
+$h4-font-size: 1.2rem;
+$magic-number: $line-height * $base-font-size;
+$base-font-weight: 400;
+$medium-font-weight: 600;
+$bold-font-weight: 700;
+
+html:not(.dark) {
+  --body-background-fallback: #e7eeff;
+  --body-background: linear-gradient(90deg, #d7f0cf 0%, #c4f5ff 100%);
+  --box-background: #f0f8ff;
+  --box-background-alt: color.scale(var(--box-background), $alpha: -40%);
+  --text-colour-body: #000;
+  --text-colour-box: #333;
+  --text-colour-link: #3caa4a;
+  --text-colour-link-footer: #000000;
+  --btn-background: #a9d4fa;
+  --btn-hover: #93b2cc;
+  --header-background: #47c6f8;
+  --footer-background: var(--header-background);
+}
+
+html.dark {
+  --body-background-fallback: #63939c;
+  --body-background: linear-gradient(90deg, #6b8f5f 0%, #63939c 100%);
+  --box-background: #4da9ac;
+  --box-background-alt: color.scale(var(--box-background), $alpha: -40%);
+  --text-colour-body: #000;
+  --text-colour-box: #000;
+  --text-colour-link: #386929;
+  --text-colour-link-footer: #000000;
+  --btn-background: #6a88a1;
+  --btn-hover: #475e72;
+  --header-background: #007e94;
+  --footer-background: var(--header-background);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}

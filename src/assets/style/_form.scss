@@ -1,0 +1,91 @@
+/**
+ * Form styling
+ */
+@use 'vars';
+
+.divider {
+  margin: 0 vars.$magic-number vars.$magic-number vars.$magic-number;
+  border-bottom: 0;
+  color: #3f36;
+}
+
+.input-box {
+  position: relative;
+}
+
+.input-box input,
+.input-box select {
+  width: 100%;
+  padding-left: 2px;
+  height: vars.$magic-number * 1.5;
+  font-size: vars.$base-font-size;
+  color: #000;
+  margin-bottom: (vars.$magic-number * 1.5);
+  border: none;
+  border-bottom: 1px solid #000;
+  outline: none;
+  background: transparent;
+}
+
+.input-box label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+  font-size: vars.$base-font-size;
+  color: #000;
+  pointer-events: none;
+  transition: 0.5s;
+}
+
+.input-box input:focus ~ label,
+.input-box input:valid ~ label,
+.input-box select ~ label {
+  top: (vars.$magic-number * -0.87);
+  left: 0;
+  color: #000;
+  font-size: vars.$base-font-size * 0.7;
+}
+
+.input-box-checkbox {
+  display: flex;
+  flex-flow: row wrap;
+  margin-bottom: vars.$magic-number;
+
+  input {
+    width: vars.$magic-number * 0.7;
+    margin-right: vars.$magic-number * 0.5;
+  }
+
+  label:first-child {
+    width: 100%;
+  }
+
+  label {
+    margin-bottom: 0;
+    width: calc(100% - (vars.$magic-number * 1.2));
+
+    &:first-child {
+      width: 100%;
+      font-size: vars.$base-font-size * 0.7;
+    }
+  }
+}
+
+.submit-btn {
+  width: 100%;
+  padding: (vars.$magic-number * 0.4) 0;
+  font-size: vars.$base-font-size;
+  background: vars.$btn-background;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px #0003;
+
+  &:hover {
+    background: vars.$btn-hover;
+  }
+
+  &:active {
+    box-shadow: none;
+  }
+}

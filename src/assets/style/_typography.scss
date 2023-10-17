@@ -1,0 +1,88 @@
+@use 'vars';
+@import url('https://fonts.googleapis.com/css2?family=Cabin&family=Jost');
+
+html {
+  font-size: 100%;
+}
+
+body {
+  line-height: vars.$line-height;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Jost', sans-serif;
+  color: vars.$text-colour-body;
+}
+
+h1 {
+  font-size: vars.$h1-font-size;
+  margin-bottom: vars.$magic-number * 2;
+  font-weight: vars.$bold-font-weight;
+
+  &:not(:first-child) {
+    margin-top: vars.$magic-number * 2;
+  }
+  text-align: center;
+}
+
+h2 {
+  font-size: vars.$h2-font-size;
+  margin-bottom: vars.$magic-number;
+  font-weight: vars.$medium-font-weight;
+
+  &:not(:first-child) {
+    margin-top: vars.$magic-number * 2;
+  }
+  text-align: center;
+}
+
+h3 {
+  font-size: vars.$h3-font-size;
+  margin-bottom: vars.$magic-number;
+  font-weight: vars.$medium-font-weight;
+
+  &:not(:first-child) {
+    margin-top: vars.$magic-number * 2;
+  }
+}
+
+h4 {
+  font-size: vars.$h4-font-size;
+  margin-bottom: vars.$magic-number;
+
+  &:not(:first-child) {
+    margin-top: vars.$magic-number * 2;
+  }
+}
+
+p,
+a,
+label {
+  font-size: vars.$base-font-size;
+  font-family: 'Cabin', serif;
+  color: vars.$text-colour-body;
+  font-weight: vars.$base-font-weight;
+  // text-align: justify;
+
+  &:not(:last-child) {
+    margin-bottom: vars.$magic-number;
+  }
+}
+
+pre,
+code {
+  color: vars.$text-colour-body;
+}
+
+a,
+a:visited {
+  color: vars.$text-colour-link;
+}
+
+.right-align {
+  display: block;
+  text-align: right;
+}

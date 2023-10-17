@@ -1,0 +1,14 @@
+/**
+ * Dev box thingies
+ */
+@use 'vars';
+
+.dev-box {
+  position: fixed;
+  top: 50%;
+  left: 0px;
+  background: vars.$box-background;
+  padding: 10px;
+  transform: translateY(-50%);
+  opacity: 75%;
+}

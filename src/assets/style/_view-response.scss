@@ -1,0 +1,18 @@
+/**
+ * Welcome view style
+ */
+
+@use 'vars';
+
+$widthThreshold: vars.$magic-number * 20;
+
+.response {
+  background-color: vars.$box-background;
+  width: min($widthThreshold, 100vw);
+  padding: vars.$magic-number;
+  padding: 40px;
+  background: vars.$box-background;
+  box-shadow: vars.$box-shadow;
+  border-radius: 10px;
+  margin: (vars.$magic-number * 2) 0;
+}

@@ -1,0 +1,48 @@
+/**
+ * Login view style
+ */
+
+@use 'vars';
+
+$widthThreshold: vars.$magic-number * 24;
+
+.login {
+  background-color: vars.$box-background;
+  padding: vars.$magic-number;
+  min-width: min(vars.$magic-number * 10, 100vw);
+  padding: vars.$magic-number * 1.5;
+  background: vars.$box-background;
+  box-shadow: vars.$box-shadow;
+  border-radius: 10px;
+}
+
+.login .wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: vars.$magic-number * 2;
+
+  @media screen and (max-width: $widthThreshold) {
+    flex-direction: column;
+    gap: vars.$magic-number;
+  }
+}
+
+.login-col {
+  width: vars.$magic-number * 9;
+}
+
+.login .divider-v {
+  width: 0;
+  border: 1px solid #000;
+
+  @media screen and (max-width: $widthThreshold) {
+    display: none;
+  }
+}
+
+.login h2 {
+  margin: 0 0 30px;
+  padding: 0;
+  color: #000;
+}

@@ -1,0 +1,54 @@
+/**
+ * Read view style
+ */
+
+@use 'vars';
+
+$headerHeight: vars.$h1-font-size * vars.$line-height;
+$footerHeight: vars.$magic-number * 2;
+$mainHeight: calc(100vh - $headerHeight - $footerHeight);
+
+.read-header,
+.read-footer {
+  background-color: vars.$header-background;
+  position: sticky;
+
+  p,
+  h1,
+  a {
+    margin: 0;
+  }
+}
+
+.read-header {
+  top: 0px;
+  height: $headerHeight;
+}
+
+.read-footer {
+  bottom: 0px;
+  padding: (vars.$magic-number * 0.5) vars.$magic-number;
+  height: $footerHeight;
+
+  nav {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-items: end;
+    justify-content: space-between;
+  }
+
+  a {
+    color: vars.$text-colour-link-footer;
+  }
+}
+
+.read {
+  background-color: vars.$box-background;
+  width: min(vars.$magic-number * 26, 100vw);
+  min-height: $mainHeight;
+  padding: vars.$magic-number;
+}
+
+.read-wrapper {
+  box-shadow: vars.$box-shadow;
+}

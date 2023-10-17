@@ -1,0 +1,31 @@
+/**
+ * Base rules
+ */
+
+@use 'vars';
+
+body {
+  background: vars.$body-background-fallback;
+  background: vars.$body-background;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  margin: auto auto;
+  // padding: 2 * vars.$magic-number;
+  max-width: 1280px;
+
+  display: flex;
+  flex-direction: column;
+}
