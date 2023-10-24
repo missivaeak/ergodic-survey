@@ -74,7 +74,7 @@
 
 .submit-btn {
   width: 100%;
-  padding: (vars.$magic-number * 0.4) 0;
+  padding: (vars.$magic-number * 0.4) vars.$magic-number;
   font-size: vars.$base-font-size;
   background: vars.$btn-background;
   border: none;

@@ -7,15 +7,16 @@ const store = useStore()
 const router = useRouter()
 
 function goRandomChapter() {
-    const chapters = store.chapters
+    const chapters = store.unviewedChapters
     const randomChapter = chapters[Math.floor(Math.random()*chapters.length)];
 
     store.currentChapter = randomChapter
+    store.setViewed(true)
     return router.push('/read')
 }
 
 function goChapters() {
-    store.currentChapter = undefined
+    store.unsetCurrentChapter()
     return router.push('/chapters')
 }
 </script>
@@ -23,7 +24,7 @@ function goChapters() {
 <template>
     <footer class="read-footer">
         <nav>
-            <a href="#" @click.prevent="goRandomChapter()">Next random chapter</a>
+            <a href="#" @click.prevent="goRandomChapter()" v-if="store.unviewedChapters.length">Random unread chapter</a>
             <a href="#" @click.prevent="goChapters()" v-if="store.currentChapter">Chapter index</a>
         </nav>
     </footer>

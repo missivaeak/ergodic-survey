@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { ref, provide } from 'vue'
+import { onUnmounted } from 'vue'
 import { useDark, useToggle } from '@vueuse/core'
-import { useRoute } from 'vue-router'
 
 import DevBox from '@/components/DevBox.vue'
 import TitleHeader from '@/components/TitleHeader.vue'
@@ -11,11 +10,17 @@ import { useStore } from '@/models/store'
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
-const route = useRoute()
-const seeIndex = route.meta.seeIndex
 const store = useStore()
 
-store.fetchChapters()
+clearInterval(store.interval)
+store.interval = setInterval(() => {
+    store.addSecond()
+}, 1000)
+
+onUnmounted(() => {
+    clearInterval(store.interval)
+    store.pushResponse()
+})
 
 </script>
 
@@ -28,7 +33,5 @@ store.fetchChapters()
         </main>
 
         <Footer />
-
-        <DevBox />
     </div>
 </template>

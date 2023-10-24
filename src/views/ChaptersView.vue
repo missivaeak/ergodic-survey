@@ -12,19 +12,23 @@ const isDark = useDark()
 const toggleDark = useToggle(isDark)
 const router = useRouter()
 const store = useStore()
-const chapters = ref(store.chapters)
+const viewedChapters = ref(store.viewedChapters)
+const unviewedChapters = ref(store.unviewedChapters)
 
 store.fetchChapters()
 
 watch(
     store.$state,
     (state) => {
-        chapters.value = state.chapters
+        store.chapters = state.chapters
+        // viewedChapters.value = store.viewedChapters
+        // unviewedChapters.value = store.unviewedChapters
     }
 )
 
-function goChapter(index: number) {
-    store.currentChapter = store.chapters[index]
+function goChapter(chapterId: number) {
+    store.currentChapter = store.getChapter(chapterId)
+    store.setViewed(true)
 
     return router.push('/read')
 }
@@ -35,13 +39,20 @@ function goChapter(index: number) {
         <TitleHeader />
 
         <main class="read">
-            <p v-for="(chapter, index,) in chapters">
-                <a href="#" @click.prevent="goChapter(index)">{{ chapter.title }}</a>
-            </p>
+            <div class="unviewed">
+                <p>Unread</p>
+                <p v-for="chapter in unviewedChapters">
+                    <a href="#" @click.prevent="goChapter(chapter.id)">{{ chapter.title }}</a>
+                </p>
+            </div>
+            <div class="viewed">
+                <p>Read:</p>
+                <p v-for="chapter in viewedChapters">
+                    <a href="#" @click.prevent="goChapter(chapter.id)">{{ chapter.title }}</a>
+                </p>
+            </div>
         </main>
 
         <Footer />
-
-        <DevBox />
     </div>
 </template>

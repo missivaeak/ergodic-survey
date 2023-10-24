@@ -10,45 +10,53 @@ $mainHeight: calc(100vh - $headerHeight - $footerHeight);
 
 .read-header,
 .read-footer {
-  background-color: vars.$header-background;
-  position: sticky;
+    background-color: vars.$header-background;
+    position: sticky;
 
-  p,
-  h1,
-  a {
-    margin: 0;
-  }
+    p,
+    h1,
+    a {
+        margin: 0;
+    }
 }
 
 .read-header {
-  top: 0px;
-  height: $headerHeight;
+    top: 0px;
+    height: $headerHeight;
 }
 
 .read-footer {
-  bottom: 0px;
-  padding: (vars.$magic-number * 0.5) vars.$magic-number;
-  height: $footerHeight;
+    bottom: 0px;
+    padding: (vars.$magic-number * 0.5) vars.$magic-number;
+    height: $footerHeight;
 
-  nav {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-items: end;
-    justify-content: space-between;
-  }
+    nav {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-items: end;
+        justify-content: space-between;
+    }
 
-  a {
-    color: vars.$text-colour-link-footer;
-  }
+    a {
+        color: vars.$text-colour-link-footer;
+    }
 }
 
 .read {
-  background-color: vars.$box-background;
-  width: min(vars.$magic-number * 26, 100vw);
-  min-height: $mainHeight;
-  padding: vars.$magic-number;
+    background-color: vars.$box-background;
+    width: min(vars.$magic-number * 26, 100vw);
+    min-height: $mainHeight;
+    padding: vars.$magic-number;
+    gap: vars.$magic-number;
+    display: flex;
+    flex-flow: row nowrap;
+
+    > div {
+        width: 50%;
+        text-align: center;
+    }
 }
 
 .read-wrapper {
-  box-shadow: vars.$box-shadow;
+    box-shadow: vars.$box-shadow;
 }

@@ -103,6 +103,4 @@ function goAccept() {
 
     <p class="right-align"><RouterLink to="/read">Start reading</RouterLink></p>
   </main>
-
-  <DevBox />
 </template>

@@ -20,6 +20,4 @@ const toggleDark = useToggle(isDark)
 
     <p class="right-align"><RouterLink to="/login">Continue</RouterLink></p>
   </main>
-
-  <DevBox />
 </template>
