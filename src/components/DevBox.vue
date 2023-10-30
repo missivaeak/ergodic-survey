@@ -3,6 +3,14 @@ import { useDark, useToggle } from '@vueuse/core'
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
+const emit = defineEmits(['showSpinner', 'showModal'])
+
+function testSpinner() {
+    emit('showSpinner', true)
+    setTimeout(() => {
+        emit('showSpinner', false)
+    }, 1000)
+}
 </script>
 
 <template>
@@ -19,6 +27,7 @@ const toggleDark = useToggle(isDark)
             content: '<p>This is a test modal.</p><p>Enjoy!</p>',
             button: 'Close',
             type: 'code-success'
-        })">Show modal</a>
+        })">Show modal</a><br>
+        <a href="#" @click.prevent="testSpinner">Show spinner</a>
     </div>
 </template>

@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import { onUnmounted } from 'vue'
-import { useDark, useToggle } from '@vueuse/core'
 
-import DevBox from '@/components/DevBox.vue'
 import TitleHeader from '@/components/TitleHeader.vue'
 import Footer from '@/components/Footer.vue'
 
 import { useStore } from '@/models/store'
 
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
 const store = useStore()
+const emit = defineEmits(['showSpinner'])
+
+emit('showSpinner', false)
 
 clearInterval(store.interval)
 store.interval = setInterval(() => {

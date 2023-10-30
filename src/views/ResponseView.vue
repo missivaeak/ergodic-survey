@@ -1,18 +1,32 @@
 <script setup lang="ts">
-import { useDark, useToggle } from '@vueuse/core'
-import { ref } from 'vue'
+    import { ref } from 'vue'
+    import { demographic } from '@/models/api'
+    import type { Ref } from 'vue'
+    import type { Demographic } from '@/models/types'
 
-import DevBox from '@/components/DevBox.vue'
+    const seeDisclaimer = ref(true)
+    const values = ref([]) as Ref<Array<any>>
+    const questions = ref([]) as Ref<Array<Demographic>>
 
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
+    demographic.getAll().then((result) => {
+        try {
+            questions.value = result.data
+        } catch(error) {
+            console.error(error)
+        }
 
-const seeDisclaimer = ref(true)
-const sliderValue = ref(4)
+        for (const question of questions.value) {
+            if (question.type === 'slider') {
+                values.value[question.id] = 0
+                continue
+            }
+            values.value[question.id] = ""
+        }
+    })
 
-function goAccept() {
-    seeDisclaimer.value = false
-}
+    function goAccept() {
+        seeDisclaimer.value = false
+    }
 </script>
 
 <template>
@@ -28,79 +42,71 @@ function goAccept() {
         <p class="right-align"><a href="./" @click.prevent="goAccept">Accept</a></p>
     </main>
 
-  <main class="response" v-else="seeDisclaimer">
-    <h1>Demographics and experience</h1>
+    <main class="response" v-else="seeDisclaimer">
+        <h1>Demographics and experience</h1>
 
-    <form>
-        <p>This is a short description of the question.</p>
+        <form>
+            <template v-for="(question, index) in questions">
+                <p>{{question.question}}</p>
 
-        <div class="input-box">
-            <input type="text" required />
-            <label>Text box</label>
-        </div>
+                <template v-if="question.type === 'text'">
+                    <div class="input-box">
+                        <input type="text" required v-model="values[question.id]" />
+                        <label>{{ question.label }}</label>
+                    </div>
+                </template>
 
-        <hr class="divider" />
+                <template v-if="question.type === 'number'">
+                    <div class="input-box">
+                        <input type="number" required v-model="values[question.id]" />
+                        <label>{{ question.label }}</label>
+                    </div>
+                </template>
 
-        <p>This is a short description of the question.</p>
+                <template v-if="question.type === 'checkbox'">
+                    <div class="input-box-checkbox">
+                        <label>{{ question.label }}</label>
+                        <template v-for="alt in question.questionAlternatives">
+                            <input type="checkbox" v-model="values[question.id]" :value="alt" />
+                            <label>{{ alt }}</label>
+                        </template>
+                    </div>
+                </template>
 
-        <div class="input-box">
-            <input type="number" required />
-            <label>Number box</label>
-        </div>
+                <template v-if="question.type === 'radio'">
+                    <div class="input-box-checkbox">
+                        <label>{{ question.label }}</label>
+                        <template v-for="alt in question.questionAlternatives">
+                            <input type="radio" v-model="values[question.id]" :value="alt" />
+                            <label>{{ alt }}</label>
+                        </template>
+                    </div>
+                </template>
 
-        <hr class="divider" />
+                <template v-if="question.type === 'dropdown'">
+                    <div class="input-box">
+                        <select v-if="question.type === 'dropdown'" v-model="values[question.id]">
+                            <template v-for="(alt, jndex) in question.questionAlternatives">
+                                <option :value="alt" selected v-if="jndex === 1">{{ alt }}</option>
+                                <option :value="alt" v-else>{{ alt }}</option>
+                            </template>
+                        </select>
+                        <label>{{ question.label }}</label>
+                    </div>
+                </template>
 
-        <p>This is a short description of the question.</p>
+                <template v-if="question.type === 'slider'">
+                    <div class="input-box">
+                        <input type="range" min="1" max="7" step="1" v-model="values[question.id]" />
+                        <label>{{ question.label }}</label>
+                        <label class="slider-value">{{ values[question.id] }}</label>
+                    </div>
+                </template>
 
-        <div class="input-box-checkbox">
-            <label>Checkboxes</label>
-            <input type="checkbox" />
-            <label>First</label>
-            <input type="checkbox" />
-            <label>Second</label>
-            <input type="checkbox" />
-            <label>Third</label>
-        </div>
+                <hr class="divider" v-if="index < questions.length - 1" />
+            </template>
+        </form>
 
-        <hr class="divider" />
-
-        <p>This is a short description of the question.</p>
-
-        <div class="input-box-checkbox">
-            <label>Radio buttons</label>
-            <input type="radio" name="radio" />
-            <label>First</label>
-            <input type="radio" name="radio" />
-            <label>Second</label>
-            <input type="radio" name="radio" />
-            <label>Third</label>
-        </div>
-
-        <hr class="divider" />
-
-        <p>This is a short description of the question.</p>
-
-        <div class="input-box">
-            <select>
-            <option>Option 1</option>
-            <option>Option 2</option>
-            <option>Option 3</option>
-            <option>Option 4</option>
-            </select>
-            <label>Drop-down</label>
-        </div>
-
-        <hr class="divider" />
-
-        <p>This is a short description of the question.</p>
-
-        <p>Slider</p>
-        <div class="input-box">
-            <input type="range" min="1" max="7" step="1" v-model="sliderValue" />
-            <label>Value: {{ sliderValue }}</label>
-        </div>
-    </form>
-
-    <p class="right-align"><RouterLink to="/read">Start reading</RouterLink></p>
-  </main>
+        <p class="right-align"><RouterLink to="/read">Start reading</RouterLink></p>
+    </main>
 </template>

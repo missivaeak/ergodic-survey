@@ -5,10 +5,11 @@
 
     import DevBox from './components/DevBox.vue';
     import Modal from './components/Modal.vue';
-    import { useStore } from '@/models/store'
+    import LoadingSpinner from './components/LoadingSpinner.vue';
 
     useDark()
 
+    const spinnerActive = ref(false)
     const modalActive = ref(false)
     const modalData = ref()
 
@@ -16,10 +17,15 @@
         modalActive.value = true
         modalData.value = event
     }
+
+    function showSpinner(bool: boolean) {
+        spinnerActive.value = bool
+    }
 </script>
 
 <template>
-    <RouterView @show-modal="showModal" />
-    <DevBox @show-modal="showModal" />
+    <RouterView @show-modal="showModal" @show-spinner="showSpinner" />
+    <DevBox @show-modal="showModal" @show-spinner="showSpinner" />
     <Modal v-if="modalActive" @hide-modal="modalActive = false" v-bind="modalData" />
+    <LoadingSpinner v-if="spinnerActive" />
 </template>

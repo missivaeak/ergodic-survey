@@ -17,6 +17,7 @@ $btn-background: var(--btn-background);
 $btn-hover: var(--btn-hover);
 $header-background: var(--header-background);
 $footer-background: var(--footer-background);
+$divider-colour: var(--divider-colour);
 
 $line-height: 1.4;
 $base-font-size: 1.25rem;
@@ -42,6 +43,7 @@ html:not(.dark) {
   --btn-hover: #93b2cc;
   --header-background: #47c6f8;
   --footer-background: var(--header-background);
+  --divider-colour: #15ff34;
 }
 
 html.dark {
@@ -57,6 +59,7 @@ html.dark {
   --btn-hover: #475e72;
   --header-background: #007e94;
   --footer-background: var(--header-background);
+  --divider-colour: #42c253;
 }
 
 *,

@@ -6,7 +6,7 @@
 .divider {
   margin: 0 vars.$magic-number vars.$magic-number vars.$magic-number;
   border-bottom: 0;
-  color: #3f36;
+  color: vars.$divider-colour;
 }
 
 .input-box {
@@ -36,6 +36,11 @@
   color: #000;
   pointer-events: none;
   transition: 0.5s;
+}
+
+label.slider-value {
+  left: unset !important;
+  right: 0;
 }
 
 .input-box input:focus ~ label,

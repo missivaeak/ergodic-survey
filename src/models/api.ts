@@ -1,4 +1,4 @@
-import type { Chapter, ResponseChapters, SurveyResponse } from "./types";
+import type { Chapter, ResponseChapters, SurveyResponse, Demographic } from "./types";
 
 const backendHost = import.meta.env.VITE_BACKEND_HOST;
 
@@ -26,6 +26,12 @@ const chapter = {
     }
 }
 
+const demographic = {
+    getAll: async function(): Promise<{success: boolean, data: Array<Demographic>}> {
+        return await getFetcher(backendHost + "/demographic");
+    }
+}
+
 const response = {
     getAvailableCode: async function(): Promise<{success: boolean, data: SurveyResponse}> {
         return await getFetcher(backendHost + "/code");
@@ -43,4 +49,4 @@ const response = {
     }
 }
 
-export { chapter, response }
+export { chapter, response, demographic }

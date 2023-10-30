@@ -1,22 +1,19 @@
 <script setup lang="ts">
     import { ref } from 'vue'
-    import { useDark, useToggle } from '@vueuse/core'
     import { useRouter } from 'vue-router'
 
     import { useStore } from '@/models/store';
     import { response } from '@/models/api';
-    import type { SurveyResponse } from '@/models/types';
 
-    const emit = defineEmits(['showModal'])
+    const emit = defineEmits(['showModal', 'showSpinner'])
     const store = useStore()
-    const isDark = useDark()
-    const toggleDark = useToggle(isDark)
     const router = useRouter()
     const existingCode = ref(localStorage.userCode)
 
     store.fetchChapters()
 
     async function submitRegister() {
+        emit('showSpinner', true)
         const result = await response.getAvailableCode()
         if (result.success) {
             store.responseState = result.data
@@ -31,6 +28,7 @@
     }
 
     async function submitLogin() {
+        emit('showSpinner', true)
         const result = await response.getResponse(existingCode.value)
         if (result.success) {
             store.responseState = result.data.response

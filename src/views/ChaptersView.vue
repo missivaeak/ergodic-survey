@@ -1,20 +1,18 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { useDark, useToggle } from '@vueuse/core'
 import { useRouter } from 'vue-router'
 
-import DevBox from '@/components/DevBox.vue'
 import TitleHeader from '@/components/TitleHeader.vue'
 import Footer from '@/components/Footer.vue'
 import { useStore } from '@/models/store'
 
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
 const router = useRouter()
 const store = useStore()
 const viewedChapters = ref(store.viewedChapters)
 const unviewedChapters = ref(store.unviewedChapters)
+const emit = defineEmits(['showSpinner'])
 
+emit('showSpinner', false)
 store.fetchChapters()
 
 watch(
@@ -27,6 +25,7 @@ watch(
 )
 
 function goChapter(chapterId: number) {
+    emit('showSpinner', true)
     store.currentChapter = store.getChapter(chapterId)
     store.setViewed(true)
 

@@ -26,4 +26,15 @@ interface SurveyResponse {
     Chapters?: Array<Chapter>
 }
 
-export type { Chapter, SurveyResponse, ResponseChapters }
+interface Demographic {
+    id: number,
+    question: string,
+    description: string,
+    type: string,
+    label: string,
+    questionAlternatives: Array<string>,
+    createdAt?: string,
+    updatedAt?: string
+}
+
+export type { Chapter, SurveyResponse, ResponseChapters, Demographic }
