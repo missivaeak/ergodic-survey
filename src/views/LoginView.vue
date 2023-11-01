@@ -23,7 +23,8 @@
                 button: "Continue",
                 type: "code-success"
             })
-            goChapters()
+            loginSetup()
+            router.push('/response')
         }
     }
 
@@ -32,18 +33,18 @@
         const result = await response.getResponse(existingCode.value)
         if (result.success) {
             store.responseState = result.data.response
-            goChapters()
+            loginSetup()
+            router.push('/chapters')
         }
     }
 
-    async function goChapters() {
+    async function loginSetup() {
         const code = store.responseState?.code
         if (typeof code == "string") {
             localStorage.userCode = code
             await store.pullResponse(code)
         }
         store.unsetCurrentChapter()
-        router.push('/chapters')
     }
 </script>
 

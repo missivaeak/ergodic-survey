@@ -4,9 +4,13 @@
     import type { Ref } from 'vue'
     import type { Demographic } from '@/models/types'
 
+
     const seeDisclaimer = ref(true)
     const values = ref([]) as Ref<Array<any>>
     const questions = ref([]) as Ref<Array<Demographic>>
+    const emit = defineEmits(['showSpinner'])
+
+    emit('showSpinner', false)
 
     demographic.getAll().then((result) => {
         try {
@@ -18,6 +22,9 @@
         for (const question of questions.value) {
             if (question.type === 'slider') {
                 values.value[question.id] = 0
+                continue
+            } else if (question.type === 'checkbox') {
+                values.value[question.id] = {}
                 continue
             }
             values.value[question.id] = ""
@@ -67,7 +74,7 @@
                     <div class="input-box-checkbox">
                         <label>{{ question.label }}</label>
                         <template v-for="alt in question.questionAlternatives">
-                            <input type="checkbox" v-model="values[question.id]" :value="alt" />
+                            <input type="checkbox" v-model="values[question.id][alt]" />
                             <label>{{ alt }}</label>
                         </template>
                     </div>
@@ -86,10 +93,8 @@
                 <template v-if="question.type === 'dropdown'">
                     <div class="input-box">
                         <select v-if="question.type === 'dropdown'" v-model="values[question.id]">
-                            <template v-for="(alt, jndex) in question.questionAlternatives">
-                                <option :value="alt" selected v-if="jndex === 1">{{ alt }}</option>
-                                <option :value="alt" v-else>{{ alt }}</option>
-                            </template>
+                            <option :value="''" disabled>Select one...</option>
+                            <option :value="alt" v-for="alt in question.questionAlternatives">{{ alt }}</option>
                         </select>
                         <label>{{ question.label }}</label>
                     </div>
@@ -107,6 +112,6 @@
             </template>
         </form>
 
-        <p class="right-align"><RouterLink to="/read">Start reading</RouterLink></p>
+        <p class="right-align"><RouterLink to="/chapters">Start reading</RouterLink></p>
     </main>
 </template>

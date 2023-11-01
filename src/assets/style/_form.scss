@@ -46,8 +46,8 @@ label.slider-value {
 .input-box input:focus ~ label,
 .input-box input:valid ~ label,
 .input-box select ~ label {
-  top: (vars.$magic-number * -0.87);
-  left: 0;
+  top: (vars.$magic-number * -0.9);
+  left: 2px;
   color: #000;
   font-size: vars.$base-font-size * 0.7;
 }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import TitleHeader from '@/components/TitleHeader.vue'
@@ -13,16 +13,10 @@ const unviewedChapters = ref(store.unviewedChapters)
 const emit = defineEmits(['showSpinner'])
 
 emit('showSpinner', false)
-store.fetchChapters()
-
-watch(
-    store.$state,
-    (state) => {
-        store.chapters = state.chapters
-        // viewedChapters.value = store.viewedChapters
-        // unviewedChapters.value = store.unviewedChapters
-    }
-)
+store.fetchChapters().then(() => {
+    viewedChapters.value = store.viewedChapters
+    unviewedChapters.value = store.unviewedChapters
+})
 
 function goChapter(chapterId: number) {
     emit('showSpinner', true)
@@ -30,6 +24,21 @@ function goChapter(chapterId: number) {
     store.setViewed(true)
 
     return router.push('/read')
+}
+
+function toggleViewed(chapterId: number) {
+    if (!store.responseChaptersState) {
+        return
+    }
+
+    for (const chapterResponse of store.responseChaptersState) {
+        if (chapterResponse.ChapterId === chapterId) {
+            chapterResponse.viewed = !chapterResponse.viewed
+        }
+    }
+    
+    viewedChapters.value = store.viewedChapters
+    unviewedChapters.value = store.unviewedChapters
 }
 </script>
 
@@ -41,13 +50,13 @@ function goChapter(chapterId: number) {
             <div class="unviewed">
                 <p>Unread</p>
                 <p v-for="chapter in unviewedChapters">
-                    <a href="#" @click.prevent="goChapter(chapter.id)">{{ chapter.title }}</a>
+                    <a href="#" @click.prevent="goChapter(chapter.id)">{{ chapter.title }}</a> <a href="#" @click.prevent="toggleViewed(chapter.id)">&gt;&gt;</a>
                 </p>
             </div>
             <div class="viewed">
                 <p>Read:</p>
                 <p v-for="chapter in viewedChapters">
-                    <a href="#" @click.prevent="goChapter(chapter.id)">{{ chapter.title }}</a>
+                    <a href="#" @click.prevent="toggleViewed(chapter.id)">&lt;&lt;</a> <a href="#" @click.prevent="goChapter(chapter.id)">{{ chapter.title }}</a>
                 </p>
             </div>
         </main>
