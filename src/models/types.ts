@@ -37,4 +37,10 @@ interface Demographic {
     updatedAt?: string
 }
 
-export type { Chapter, SurveyResponse, ResponseChapters, Demographic }
+interface ResponseDemographics {
+    ResponseId: number,
+    DemographicId: number,
+    value: string
+}
+
+export type { Chapter, SurveyResponse, ResponseChapters, Demographic, ResponseDemographics }

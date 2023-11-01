@@ -25,7 +25,7 @@
 
 <template>
     <RouterView @show-modal="showModal" @show-spinner="showSpinner" />
-    <DevBox @show-modal="showModal" @show-spinner="showSpinner" />
+    <!-- <DevBox @show-modal="showModal" @show-spinner="showSpinner" /> -->
     <LoadingSpinner v-if="spinnerActive" />
     <Modal v-if="modalActive" @hide-modal="modalActive = false" v-bind="modalData" />
 </template>

@@ -1,18 +1,22 @@
 <script setup lang="ts">
-    import { ref } from 'vue'
-    import { demographic } from '@/models/api'
     import type { Ref } from 'vue'
-    import type { Demographic } from '@/models/types'
+    import type { Demographic, SurveyResponse, ResponseDemographics } from '@/models/types'
 
+    import { ref } from 'vue'
+    import { demographic as demographicModel, response as responseModel } from '@/models/api'
+    import { useStore } from '@/models/store'
+    import { useRouter } from 'vue-router'
 
     const seeDisclaimer = ref(true)
     const values = ref([]) as Ref<Array<any>>
     const questions = ref([]) as Ref<Array<Demographic>>
     const emit = defineEmits(['showSpinner'])
+    const store = useStore()
+    const router = useRouter()
 
     emit('showSpinner', false)
 
-    demographic.getAll().then((result) => {
+    demographicModel.getAll().then((result) => {
         try {
             questions.value = result.data
         } catch(error) {
@@ -33,6 +37,44 @@
 
     function goAccept() {
         seeDisclaimer.value = false
+    }
+
+    async function goChapters() {
+        emit('showSpinner', true)
+
+        function customParseValue(value: any) {
+            let newValue = ""
+
+            if (typeof value == "string") {
+                newValue = value
+            } else if (Array.isArray(value)) {
+                newValue = value.join()
+            } else if (typeof value == "number") {
+                newValue = value.toString()
+            } else if (typeof value == "object") {
+                newValue = Object.keys(value).filter((key) => {
+                    return value[key]
+                }).join()
+            }
+
+            return newValue
+        }
+
+        const responseDemographicsData = []
+
+        for (const question of questions.value) {
+            responseDemographicsData.push({
+                DemographicId: question.id,
+                value: customParseValue(values.value[question.id])
+            })
+        }
+
+        await responseModel.postDemographics(
+            store.responseState as SurveyResponse,
+            responseDemographicsData as Array<ResponseDemographics>
+        );
+
+        router.push('/chapters')
     }
 </script>
 
@@ -112,6 +154,6 @@
             </template>
         </form>
 
-        <p class="right-align"><RouterLink to="/chapters">Start reading</RouterLink></p>
+        <p class="right-align"><a href="#" @click.prevent="goChapters">Send answers and start reading</a></p>
     </main>
 </template>
